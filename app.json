@@ -1,0 +1,9 @@
+{
+    "name": "Docker Test",
+    "description": "Django instance for heroku-docker",
+    "image": "heroku/python",
+    "addons": [
+        "heroku-postgresql",
+        "memcachedcloud:30"
+    ]
+}

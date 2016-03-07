@@ -1,0 +1,32 @@
+web:
+  build: .
+  command: 'bash -c ''gunicorn django.wsgi'''
+  working_dir: /app/user
+  environment:
+    PORT: 8080
+    DATABASE_URL: 'postgres://postgres:@herokuPostgresql:5432/postgres'
+    MEMCACHEDCLOUD_SERVERS: 'memcachedcloud:11211'
+  ports:
+    - '8080:8080'
+  links:
+    - herokuPostgresql
+    - memcachedcloud
+shell:
+  build: .
+  command: bash
+  working_dir: /app/user
+  environment:
+    PORT: 8080
+    DATABASE_URL: 'postgres://postgres:@herokuPostgresql:5432/postgres'
+    MEMCACHEDCLOUD_SERVERS: 'memcachedcloud:11211'
+  ports:
+    - '8080:8080'
+  links:
+    - herokuPostgresql
+    - memcachedcloud
+  volumes:
+    - '.:/app/user'
+herokuPostgresql:
+  image: postgres
+memcachedcloud:
+  image: memcached
