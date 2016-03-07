@@ -34,6 +34,5 @@ RUN chmod +x /app/.profile.d/python.sh
 ADD requirements.txt /app/user/
 RUN pip install --upgrade pip
 RUN /app/.heroku/python/bin/pip install -r requirements.txt
-ADD . /app/user/
 
 ENTRYPOINT ["/usr/bin/init"]
