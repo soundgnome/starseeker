@@ -40,6 +40,7 @@ class HeroClass(models.Model):
         return self.name
 
     class Meta:
+        verbose_name_plural = 'Hero classes'
         ordering = ('name',)
 
 
