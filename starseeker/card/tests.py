@@ -4,6 +4,10 @@ from .models import Card, CardBlock, CardMechanic, HeroClass, Tribe
 
 class CardTestCase(TestCase):
 
+    fixtures = (
+        'card/fixtures/card_cardblock.json',
+    )
+
     def test_minion_attributes(self):
         card = Card.objects.get(card_id='CS2_182')
         self.assertEqual(card.name, 'Chillwind Yeti')
