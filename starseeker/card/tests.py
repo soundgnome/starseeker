@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Block, Card, CardMechanic, HeroClass, MinionRace
+from .models import Card, CardBlock, CardMechanic, HeroClass, Tribe
 
 
 class CardTestCase(TestCase):
@@ -11,7 +11,7 @@ class CardTestCase(TestCase):
         self.assertEqual(card.attack, 4)
         self.assertEqual(card.health, 5)
         self.assertEqual(card.rarity, Card.Rarity.COMMON)
-        self.assertEqual(card.type, Card.Type.MINION)
+        self.assertEqual(card.card_type, Card.Type.MINION)
         self.assertEqual(card.collectible, True)
         self.assertIsNone(card.effect)
 
@@ -25,8 +25,8 @@ class CardTestCase(TestCase):
         hero_class = HeroClass.objects.get(name='Warlock')
         self.assertEqual(card.hero_class.pk, hero_class.pk)
 
-        race = MinionRace.objects.get(name='Demon')
-        self.assertEqual(card.race.pk, race.pk)
+        tribe = Tribe.objects.get(name='Demon')
+        self.assertEqual(card.tribe.pk, tribe.pk)
 
         has_mechanic = False
         card_mechanic = CardMechanic.objects.get(name='Battlecry')

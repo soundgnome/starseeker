@@ -7,3 +7,4 @@ static==1.1.1
 argparse==1.4.0
 django-bmemcached==0.2.3
 python-binary-memcached==0.24.6
+django-enumfields==0.7.4

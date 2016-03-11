@@ -20,6 +20,9 @@ WORKDIR /app/user
 COPY ./init /usr/bin/init
 RUN chmod +x /usr/bin/init
 
+COPY ./util/runtests.sh /usr/local/bin/runtests
+RUN chmod +x /usr/local/bin/runtests
+
 # Install Python
 RUN curl -s https://lang-python.s3.amazonaws.com/cedar-14/runtimes/$PYTHON_VERSION.tar.gz | tar zx -C /app/.heroku/python
 
