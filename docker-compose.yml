@@ -30,8 +30,6 @@ shell:
   links:
     - herokuPostgresql
     - memcachedcloud
-  volumes:
-    - '.:/app/user'
 herokuPostgresql:
   image: postgres
   env_file:
