@@ -80,7 +80,7 @@ class Card(models.Model):
     health = models.IntegerField(blank=True, null=True)
     effect = models.CharField(max_length=255, blank=True, default='')
     tribe = models.ForeignKey(Tribe, blank=True, null=True)
-    mechanics = models.ManyToManyField(CardMechanic)
+    mechanics = models.ManyToManyField(CardMechanic, blank=True)
     collectible = models.BooleanField(default=True)
 
     def __str__(self):

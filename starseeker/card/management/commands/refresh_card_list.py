@@ -41,23 +41,26 @@ class Command(BaseCommand):
         if not refs:
             return
 
-        Card.objects.get_or_create(
-            card_id = card_dict['id'],
-            name = card_dict['name'],
-            rarity = getattr(Card.Rarity, card_dict['rarity']),
-            block = refs['block'],
-            hero_class = refs['hero_class'],
-            card_type = getattr(Card.CardType, card_dict['type']),
-            cost = card_dict['cost'],
-            attack = self._safe_get(card_dict, 'attack'),
-            health = self._safe_get(card_dict, 'health|durability'),
-            effect = self._safe_get(card_dict, 'text'),
-            tribe = refs['tribe'],
-            #mechanics = refs['mechanics'],
-            collectible = card_dict['collectible'],
-        )
+        card = Card.objects.get_or_create(card_id = card_dict['id'])[0]
+        card.name = card_dict['name']
+        card.rarity = getattr(Card.Rarity, card_dict['rarity'])
+        card.block = refs['block']
+        card.hero_class = refs['hero_class']
+        card.card_type = getattr(Card.CardType, card_dict['type'])
+        card.cost = card_dict['cost']
+        card.attack = self._safe_get(card_dict, 'attack')
+        card.health = self._safe_get(card_dict, 'health|durability')
+        card.effect = self._safe_get(card_dict, 'text', '')
+        card.tribe = refs['tribe']
+        card.collectible = card_dict['collectible']
 
-        self._say('added %s (%s)' % (card_dict['name'], card_dict['id']))
+        card.mechanics.clear()
+        if refs['mechanics']:
+            for mechanic in refs['mechanics']:
+                card.mechanics.add(mechanic)
+
+        card.save()
+        self._say('refreshed %s (%s)' % (card_dict['name'], card_dict['id']))
 
         return True
 
@@ -107,12 +110,12 @@ class Command(BaseCommand):
         return instance
 
 
-    def _safe_get(self, dict, key):
+    def _safe_get(self, dict, key, default=None):
         keys = key.split('|')
         for key in keys:
             if key in dict:
                 return dict[key]
-        return None
+        return default
 
 
     def _say(self, message):
