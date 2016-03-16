@@ -31,7 +31,7 @@ shell:
     - herokuPostgresql
     - memcachedcloud
 herokuPostgresql:
-  image: postgres
+  image: postgres:9.4
   env_file:
     .env
 memcachedcloud:
