@@ -83,8 +83,23 @@ class Card(models.Model):
     mechanics = models.ManyToManyField(CardMechanic, blank=True)
     collectible = models.BooleanField(default=True)
 
+    def is_in_standard(self, standard_year):
+        return standard_year.blocks.filter(pk=self.block.pk).exists()
+
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ('name',)
+
+
+class StandardYear(models.Model):
+    name = models.CharField(max_length=255)
+    year = models.IntegerField()
+    blocks = models.ManyToManyField(CardBlock)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('-year',)

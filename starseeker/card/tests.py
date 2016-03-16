@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Card, CardBlock, CardMechanic, HeroClass, Tribe
+from .models import Card, CardBlock, CardMechanic, HeroClass, StandardYear, Tribe
 
 
 class CardTestCase(TestCase):
@@ -10,6 +10,7 @@ class CardTestCase(TestCase):
         'card/fixtures/card_heroclass.json',
         'card/fixtures/card_tribe.json',
         'card/fixtures/card_card.json',
+        'card/fixtures/card_standardyear.json',
     )
 
     def test_minion_attributes(self):
@@ -38,6 +39,12 @@ class CardTestCase(TestCase):
 
         self.assertTrue(card.mechanics.filter(name='Battlecry').exists())
         self.assertFalse(card.mechanics.filter(name='Charge').exists())
+
+
+    def test_standard_membership(self):
+        standard_year = StandardYear.objects.first()
+        self.assertTrue(Card.objects.get(card_id='EX1_277').is_in_standard(standard_year))
+        self.assertFalse(Card.objects.get(card_id='FP1_019').is_in_standard(standard_year))
 
 
     def test_weapon_attributes(self):
